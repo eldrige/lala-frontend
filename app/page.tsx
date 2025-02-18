@@ -19,7 +19,7 @@ export default function Home() {
             <ImageMosaic />
           </div>
           <div className="w-full h-[60vh] md:h-[50vh]  rounded-lg  text-black">
-            <h1 className="text-3xl text-center w-full md:text-4xl md:max-w-[60%] font-bold pt-16  mb-4">
+            <h1 className="text-3xl text-center md:text-left w-full md:text-4xl md:max-w-[60%] font-bold pt-16  mb-4">
               Find Your Perfect Apartment or Let Yours Stress-Free – All in One
               Place<span className="text-pink-500 text-4xl md:text-6xl">.</span>
             </h1>

@@ -1,11 +1,12 @@
 import { TProperty } from '@/types/property';
 import { HeartIcon, StarIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const PropertyCard = () => {
   return (
-    <div className="w-full md:max-w-72 cursor-pointer mb-4">
-      <div className="h-72 bg-red-500 rounded-lg relative md:max-w-72 mb-3.5">
+    <Link href="/property/1" className="w-full md:max-w-72 cursor-pointer mb-4">
+      <div className="h-72 rounded-lg relative md:max-w-72 mb-3.5">
         <div className="absolute top-4 z-30 px-1.5 py-1 left-4 bg-white text-black rounded-lg">
           Guest Favorite
         </div>
@@ -33,6 +34,6 @@ export const PropertyCard = () => {
         <span className="font-semibold">$256 </span>
         night
       </p>
-    </div>
+    </Link>
   );
 };
