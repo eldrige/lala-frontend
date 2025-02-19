@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Spinner({ className }: { className: string }) {
+export function Spinner({ className }: { className?: string }) {
   return (
     <svg className={`animate-spin w-6 h-6 ${className}`} viewBox="0 0 256 256">
       <line
