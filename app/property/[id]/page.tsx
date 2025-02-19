@@ -36,7 +36,7 @@ export default function Page() {
             <div className="w-full bg-green-500 rounded-br-2xl">4</div>
           </div>
         </div>
-        <div className="w-full flex justify-between mt-2 gap-4">
+        <div className="w-full flex justify-between mt-4 gap-4">
           <div className="w-2/3 flex flex-col">
             <h2 className="text-2xl font-semibold text-gray-800">
               Entire rental unit in Cape Town, South Africa.
@@ -83,6 +83,31 @@ export default function Page() {
               with a view or just relax around the pool or in the sauna, this
               penthouse offers it all.. The dedicated workspace refers to the
               desks in each bedrooms
+            </div>
+            <div>
+              <h2 className="text-2xl font-semibold text-gray-800 pt-8 mb-4">
+                What this place offers
+              </h2>
+              <div className="grid grid-cols-3 gap-2">
+                <div className="flex flex-col gap-2">
+                  <p>Mountain view</p>
+                  <p>Ocean view</p>
+                  <p>Kitchen </p>
+                  <p>Fast wifi</p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p>Residential garage</p>
+                  <p>Private sauna</p>
+                  <p>Carbon monoxide alarm </p>
+                  <p>Smoke alarm</p>
+                </div>
+                <div className="invisible">
+                  <p>Residential garage</p>
+                  <p>Private sauna</p>
+                  <p>Carbon monoxide alarm </p>
+                  <p>Smoke alarm</p>
+                </div>
+              </div>
             </div>
           </div>
           <div className="w-1/3 sticky top-1">
