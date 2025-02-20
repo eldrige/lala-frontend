@@ -38,6 +38,9 @@ export const useEditProperty = () => {
     mutationFn: editProperty,
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['my-properties'] });
+      toast.success('Property updated', {
+        position: 'bottom-right' as ExternalToast['position'],
+      });
     },
   });
 };
@@ -47,6 +50,9 @@ export const useTogglePropertyStatus = () => {
     mutationFn: editProperty,
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['my-properties'] });
+      toast.success('Status updated', {
+        position: 'bottom-right' as ExternalToast['position'],
+      });
     },
   });
 };

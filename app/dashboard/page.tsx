@@ -10,11 +10,18 @@ import { useState } from 'react';
 import CreateListingForm from './components/create-listing';
 import { useGetMyProperties } from '@/features/property';
 import { PropertyCard } from './components/property';
+import { TProperty } from '@/types/property';
+import { EditListing } from './components/edit-listing';
 // import { PropertyCard } from '@/components/property-card';
 
 const Page = () => {
   const { data, isPending } = useGetMyProperties();
   const [isOpen, setIsOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [currentProperty, setCurrentProperty] = useState<TProperty | undefined>(
+    undefined
+  );
+
   const closeForm = () => setIsOpen(false);
 
   return (
@@ -31,7 +38,18 @@ const Page = () => {
       {data?.length === 0 && !isPending ? <NoContent /> : null}
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-2 my-12">
         {data?.map((property, index) => (
-          <PropertyCard key={index} property={property} />
+          <div
+            key={index}
+            onClick={() => {
+              setCurrentProperty(property);
+            }}
+          >
+            <PropertyCard
+              key={index}
+              property={property}
+              setIsEditOpen={setIsEditOpen}
+            />
+          </div>
         ))}
       </div>
       <Dialog
@@ -48,6 +66,13 @@ const Page = () => {
           <CreateListingForm closeForm={closeForm} />
         </DialogPanel>
       </Dialog>
+      {currentProperty ? (
+        <EditListing
+          isOpen={isEditOpen}
+          setIsOpen={setIsEditOpen}
+          property={currentProperty}
+        />
+      ) : null}
     </div>
   );
 };

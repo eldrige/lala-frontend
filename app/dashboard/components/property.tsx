@@ -9,7 +9,13 @@ import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
 import { TrashIcon } from '@heroicons/react/20/solid';
 import { useDeleteProperty } from '@/features/property';
 
-export const PropertyCard = ({ property }: { property: TProperty }) => {
+export const PropertyCard = ({
+  property,
+  setIsEditOpen,
+}: {
+  property: TProperty;
+  setIsEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const { mutate, isPending } = useDeleteProperty();
   return (
     <div className="w-full md:max-w-72 cursor-pointer mb-4">
@@ -32,7 +38,10 @@ export const PropertyCard = ({ property }: { property: TProperty }) => {
             anchor="right"
             className="flex flex-col bg-white rouned-lg  text-gray-800 ml-[17rem] mt-16 divide-y-2 divide-gray-200 w-36 shadow-lg"
           >
-            <button className="flex hover:bg-gray-200 items-center py-2 px-4 gap-x-2">
+            <button
+              onClick={() => setIsEditOpen(true)}
+              className="flex hover:bg-gray-200 items-center py-2 px-4 gap-x-2"
+            >
               <PencilIcon className="h-6 w-6 text-gray-800 cursor-pointer" />
               <p>Edit</p>
             </button>
