@@ -20,6 +20,7 @@ interface Property {
   hostId: string;
   createdAt: string;
   updatedAt: string;
+  host: Renter;
 }
 
 interface Renter {

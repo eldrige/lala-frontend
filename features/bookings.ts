@@ -1,6 +1,5 @@
 import { axios } from '@/lib/axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-// import { queryClient } from '@/lib/react-query';
 import { ExternalToast, toast } from 'sonner';
 import { TBooking } from '@/types/booking';
 
@@ -16,6 +15,9 @@ const updateBookingStatus = ({
 const getMyBookingsAsHost = (): Promise<Array<TBooking>> =>
   axios.get('/bookings/host-bookings');
 
+const getMyBookingsAsRenter = (): Promise<Array<TBooking>> =>
+  axios.get('/bookings/my-bookings');
+
 // const editProperty = (data: Partial<TProperty>): Promise<Partial<TProperty>> =>
 //   axios.put(`/properties/${data.id}`, data);
 
@@ -28,12 +30,20 @@ export const useGetMyBookings = () =>
     queryFn: getMyBookingsAsHost,
   });
 
+export const useGetMyBookingsAsRenter = () =>
+  useQuery({
+    queryKey: ['renter-bookings'],
+    queryFn: getMyBookingsAsRenter,
+  });
+
 export const useUpdateBookingStatus = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateBookingStatus,
     onSuccess() {
-      queryClient.invalidateQueries({ queryKey: ['my-bookings'] });
+      queryClient.invalidateQueries({
+        queryKey: ['my-bookings', 'renter-bookings'],
+      });
       toast.success('Booking updated', {
         position: 'bottom-right' as ExternalToast['position'],
       });
