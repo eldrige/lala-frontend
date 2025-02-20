@@ -3,10 +3,13 @@ import { useMutation } from '@tanstack/react-query';
 import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 
-const loginViaGoogle = (
-  access_token: string,
-  role?: 'HOST' | 'RENTER'
-): Promise<any> => axios.post('/users/auth', { access_token, role });
+const loginViaGoogle = ({
+  access_token,
+  role,
+}: {
+  access_token: string;
+  role?: 'RENTER' | 'HOST';
+}): Promise<any> => axios.post('/users/auth', { access_token, role });
 
 export const useLoginViaGoogle = () => {
   const router = useRouter();
@@ -14,11 +17,17 @@ export const useLoginViaGoogle = () => {
     mutationFn: loginViaGoogle,
     onSuccess(data) {
       console.log(data.token, 'From login');
+      const userRole = data?.data?.user?.role
 
       //   toast.success('Login successful!');
       if (data.token) {
         setCookie('LALA_TOKEN', data.token);
-        router.push('/dashboard');
+        setCookie('LALA_USER', JSON.stringify(data.data.user));
+        if (userRole === 'RENTER') {
+          router.push('/renter-dashboard');
+        } else {
+          router.push('/dashboard');
+        }
       }
 
       if (data.token !== undefined) {

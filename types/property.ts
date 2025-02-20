@@ -6,4 +6,5 @@ export type TProperty = {
   type: string;
   gallery: Array<string>;
   isGuestFavorite: boolean;
+  location: string;
 };

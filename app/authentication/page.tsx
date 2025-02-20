@@ -6,7 +6,7 @@ const Page = () => {
   return (
     <div className="w-full min-h-screen grid grid-cols-2">
       <div className="relative max-lg:hidden h-screen">
-        <div className="absolute justify-end items-center pb-20 top-0 bottom-0 right-0 left-0 bg-primary flex flex-col">
+        <div className="absolute justify-end items-center pb-20 top-0 bottom-0 right-0 left-0  flex flex-col">
           <h1 className="text-4xl text-white">Join LaLa for free!</h1>
           <p className="text-lg text-white max-w-md text-center mt-3">
             Let&apos;s make scheduling a breeze and never miss a beat. Join us

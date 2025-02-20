@@ -11,7 +11,9 @@ export function SignInForm() {
     useLoginViaGoogle();
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => {
-      loginViaGoogle(codeResponse.access_token);
+      loginViaGoogle({
+        access_token: codeResponse.access_token,
+      });
     },
     onError: (error) => {
       console.log(error);
