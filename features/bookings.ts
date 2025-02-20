@@ -1,7 +1,6 @@
 import { axios } from '@/lib/axios';
-import { TProperty } from '@/types/property';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { queryClient } from '@/lib/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+// import { queryClient } from '@/lib/react-query';
 import { ExternalToast, toast } from 'sonner';
 import { TBooking } from '@/types/booking';
 
@@ -23,7 +22,14 @@ const getMyBookingsAsHost = (): Promise<Array<TBooking>> =>
 // const deleteProperty = (id: string): Promise<unknown> =>
 //   axios.delete(`/properties/${id}`);
 
+export const useGetMyBookings = () =>
+  useQuery({
+    queryKey: ['my-bookings'],
+    queryFn: getMyBookingsAsHost,
+  });
+
 export const useUpdateBookingStatus = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateBookingStatus,
     onSuccess() {
@@ -34,12 +40,6 @@ export const useUpdateBookingStatus = () => {
     },
   });
 };
-
-export const useGetMyBookings = () =>
-  useQuery({
-    queryKey: ['my-bookings'],
-    queryFn: getMyBookingsAsHost,
-  });
 
 // export const useEditProperty = () => {
 //   return useMutation({

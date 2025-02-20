@@ -1,7 +1,6 @@
 import { axios } from '@/lib/axios';
 import { TProperty } from '@/types/property';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { queryClient } from '@/lib/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ExternalToast, toast } from 'sonner';
 
 const createProperty = (
@@ -18,6 +17,8 @@ const deleteProperty = (id: string): Promise<unknown> =>
   axios.delete(`/properties/${id}`);
 
 export const useCreateProperty = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: createProperty,
     onSuccess() {
@@ -34,6 +35,8 @@ export const useGetMyProperties = () => {
 };
 
 export const useEditProperty = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: editProperty,
     onSuccess() {
@@ -46,6 +49,8 @@ export const useEditProperty = () => {
 };
 
 export const useTogglePropertyStatus = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: editProperty,
     onSuccess() {
@@ -58,6 +63,8 @@ export const useTogglePropertyStatus = () => {
 };
 
 export const useDeleteProperty = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: deleteProperty,
     onSuccess() {
