@@ -8,10 +8,14 @@ import {
 } from '@headlessui/react';
 import { useState } from 'react';
 import CreateListingForm from './components/create-listing';
+import { useGetMyProperties } from '@/features/property';
+import { PropertyCard } from '@/components/property-card';
 
 const Page = () => {
+  const { data, isPending } = useGetMyProperties();
   const [isOpen, setIsOpen] = useState(false);
   const closeForm = () => setIsOpen(false);
+  console.log(data, 'From our screen');
 
   return (
     <div className="p-6 md:p-10 md:pt-8 max-md:pb-40">
@@ -24,7 +28,12 @@ const Page = () => {
           + New Listing
         </button>
       </div>
-      <NoContent />
+      {data?.length === 0 && !isPending ? <NoContent /> : null}
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-2 my-12">
+        {data?.map((property, index) => (
+          <PropertyCard key={index} property={property} />
+        ))}
+      </div>
       <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
@@ -37,16 +46,7 @@ const Page = () => {
             This will create a new listing visible to all lala users
           </Description>
           <CreateListingForm closeForm={closeForm} />
-          {/* <p>
-              Are you sure you want to deactivate your account? All of your data
-              will be permanently removed.
-            </p>
-            <div className="flex gap-4">
-              <button onClick={() => setIsOpen(false)}>Cancel</button>
-              <button onClick={() => setIsOpen(false)}>Deactivate</button>
-            </div> */}
         </DialogPanel>
-        {/* </div> */}
       </Dialog>
     </div>
   );
