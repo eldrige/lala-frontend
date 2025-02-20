@@ -9,13 +9,13 @@ import {
 import { useState } from 'react';
 import CreateListingForm from './components/create-listing';
 import { useGetMyProperties } from '@/features/property';
-import { PropertyCard } from '@/components/property-card';
+import { PropertyCard } from './components/property';
+// import { PropertyCard } from '@/components/property-card';
 
 const Page = () => {
   const { data, isPending } = useGetMyProperties();
   const [isOpen, setIsOpen] = useState(false);
   const closeForm = () => setIsOpen(false);
-  console.log(data, 'From our screen');
 
   return (
     <div className="p-6 md:p-10 md:pt-8 max-md:pb-40">
