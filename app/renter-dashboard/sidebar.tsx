@@ -47,7 +47,9 @@ const NavLink: React.FC<any> = ({ label, children }) => {
         // }}
         className="flex bounce cursor-pointer py-2 items-center gap-4"
       >
-        <div className="text-2xl font-bold text-primary">LALA</div>
+        <Link href="/" className="text-2xl font-bold text-primary">
+          LALA
+        </Link>
       </div>
       <hr className="my-4" />
       {LINKS.map((navlink, index) => (

@@ -1,3 +1,5 @@
+'use client';
+import { useState } from 'react';
 import { Container } from '@/components/container';
 import { Footer } from '@/components/footer';
 import { ImageMosaic } from '@/components/image-mosaic';
@@ -6,10 +8,19 @@ import { PropertyCard } from '@/components/property-card';
 import { HomeIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import Image from 'next/image';
+import clsx from 'clsx';
+import { useGetAllProperties } from '@/features/property';
 
-const CATEGORIES = ['All', 'Flat', 'Villa', 'Apartment'];
+const CATEGORIES = [
+  { label: 'All', active: true },
+  { label: 'Flat', active: false },
+  { label: 'Villa', active: false },
+  { label: 'Apartment', active: false },
+];
 
 export default function Home() {
+  const { data, isLoading } = useGetAllProperties();
+  console.log(data, 'From home');
   return (
     <>
       <Navbar />
@@ -26,23 +37,18 @@ export default function Home() {
             <div className="flex items-center gap-4 md:gap-2 mb-4">
               {CATEGORIES.map((category, index) => (
                 <div
-                  key={category}
+                  key={index}
                   className="text-gray-800 p-2 cursor-pointer flex flex-col items-center gap-1"
                 >
-                  <div
-                    className={classNames(
-                      'rounded-lg shadow-lg hover:bg-gray-200 transition-colors duration-300 bg-white size-12 mb-1.5 flex items-center justify-center',
-                      index === 0 && 'bg-pink-500 text-white'
-                    )}
-                  >
+                  <button className="rounded-lg shadow-lg hover:bg-gray-200 transition-colors duration-300 bg-white size-12 mb-1.5 flex items-center justify-center">
                     <HomeIcon
                       className={classNames(
-                        'h-6 w-6 text-black',
-                        index === 0 && 'text-white'
+                        'h-6 w-6 text-black'
+                        // category.active === 0 && 'text-white'
                       )}
                     />
-                  </div>
-                  <p className="text-sm">{category}</p>
+                  </button>
+                  <p className="text-sm">{category.label}</p>
                 </div>
               ))}
             </div>
@@ -62,13 +68,13 @@ export default function Home() {
             Your recent searches
           </h2>
           <div className="flex flex-col md:flex-row gap-8">
-            <PropertyCard />
-            <PropertyCard />
+            {/* <PropertyCard />
+            <PropertyCard /> */}
           </div>
           <h2 className="text-2xl text-black font-bold my-8">Popular around</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-x-2 gap-y-4">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <PropertyCard key={i} />
+            {data?.map((property, i) => (
+              <PropertyCard key={i} property={property} />
             ))}
           </div>
           <div className="flex items-center justify-center mt-8 mb-4">

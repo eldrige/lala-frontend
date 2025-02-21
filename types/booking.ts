@@ -23,7 +23,7 @@ interface Property {
   host: Renter;
 }
 
-interface Renter {
+export interface Renter {
   id: string;
   email: string;
   name: string;

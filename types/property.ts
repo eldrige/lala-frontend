@@ -1,3 +1,5 @@
+import { TUser } from './auth';
+
 export type TProperty = {
   pricePerNight: number;
   title: string;
@@ -8,4 +10,5 @@ export type TProperty = {
   isGuestFavorite: boolean;
   location: string;
   id: string;
+  host: TUser;
 };

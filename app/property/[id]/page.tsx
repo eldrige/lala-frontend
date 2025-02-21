@@ -1,20 +1,40 @@
 // import { useRouter } from 'next/router';
-
+'use client';
+import { useState } from 'react';
 import { Container } from '@/components/container';
 import { Footer } from '@/components/footer';
 import Navbar from '@/components/navbar';
 import { StarIcon } from '@heroicons/react/16/solid';
 import { ShareIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { useParams } from 'next/navigation';
+import Image from 'next/image';
+import { useGetProperty } from '@/features/property';
+import { format } from 'date-fns';
+import { Calendar as CalendarIcon } from 'lucide-react';
+
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 export default function Page() {
-  // const router = useRouter();
+  const [date, setDate] = useState<Date>();
+  const { id } = useParams();
+  const [checkoutDate, setCheckoutDate] = useState<Date>();
+  const { data, isLoading } = useGetProperty(id);
+  // const propertyId = router.query.id;
+  console.log(data, 'From page');
   return (
     <>
       <Navbar />
       <Container classNames="px-10 md:px-20 pb-20 text-gray-800">
         <div className="w-full flex items-center justify-between pt-8 pb-2">
           <h2 className="text-2xl font-semibold text-gray-800">
-            Penthouse 100m from beachfront with pool and sauna
+            {data?.title}
           </h2>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1 text-black text-sm">
@@ -28,18 +48,73 @@ export default function Page() {
           </div>
         </div>
         <div className="w-full flex gap-2 py-4">
-          <div className="w-1/2 min-h-[400px] rounded-l-2xl bg-gray-300">1</div>
+          <div className="relative w-1/2 min-h-[400px] rounded-l-2xl ">
+            <Image
+              src={`/images/house.jpg`}
+              alt="pretty house"
+              className="rounded-lg"
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: 'cover',
+              }}
+            />
+          </div>
           <div className="w-1/2 min-h-[400px] grid grid-cols-2 gap-2">
-            <div className="w-full bg-red-500">1</div>
-            <div className="w-full bg-blue-500 rounded-tr-2xl">2</div>
-            <div className="w-full bg-orange-500">3</div>
-            <div className="w-full bg-green-500 rounded-br-2xl">4</div>
+            <div className="w-full relative">
+              <Image
+                src={`/images/house-two.jpg`}
+                alt="pretty house"
+                className="rounded-lg"
+                fill
+                sizes="100vw"
+                style={{
+                  objectFit: 'cover',
+                }}
+              />
+            </div>
+            <div className="w-full relative rounded-tr-2xl">
+              <Image
+                src={`/images/house-four.jpg`}
+                alt="pretty house"
+                className="rounded-lg"
+                fill
+                sizes="100vw"
+                style={{
+                  objectFit: 'cover',
+                }}
+              />
+            </div>
+            <div className="w-full relative">
+              <Image
+                src={`/images/house-five.jpg`}
+                alt="pretty house"
+                className="rounded-lg"
+                fill
+                sizes="100vw"
+                style={{
+                  objectFit: 'cover',
+                }}
+              />
+            </div>
+            <div className="w-full relative rounded-br-2xl">
+              <Image
+                src={`/images/house-seven.jpg`}
+                alt="pretty house"
+                className="rounded-lg"
+                fill
+                sizes="100vw"
+                style={{
+                  objectFit: 'cover',
+                }}
+              />
+            </div>
           </div>
         </div>
         <div className="w-full flex justify-between mt-4 gap-4">
           <div className="w-2/3 flex flex-col">
             <h2 className="text-2xl font-semibold text-gray-800">
-              Entire rental unit in Cape Town, South Africa.
+              {data?.description}
             </h2>
             <div className="flex items-center text-gray-600 gap-2">
               <span>4 guests</span>
@@ -72,7 +147,9 @@ export default function Page() {
             <div className="w-full py-6 ">
               <div className="flex gap-2 items-center">
                 <span className="size-12 rounded-full bg-pink-500"></span>
-                <h3 className="text-gray-600 text-lg">Hosted by Gavin</h3>
+                <h3 className="text-gray-600 text-lg">
+                  Hosted by {data?.host?.name}
+                </h3>
               </div>
             </div>
             <div className="w-full py-6 border-y-2 border-gray-100">
@@ -115,14 +192,66 @@ export default function Page() {
               <h2 className="text-lg font-semibold text-gray-800">
                 Add dates for prices
               </h2>
-              <div className="w-full font-semibold rounded-t-2xl border flex  border-gray-200 divide-x-2 divide-gray-100">
+              <div className="w-full font-semibold rounded-t-2xl border flex flex-col  border-gray-200 divide-y-2 divide-gray-100">
                 <div className="p-2">
                   <p>Check In</p>
-                  <input type="date" className="w-full" value="" />
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={'outline'}
+                        className={cn(
+                          'w-full mt-1 justify-start text-left font-normal',
+                          !date && 'text-muted-foreground'
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {date ? format(date, 'PPP') : <span>Pick a date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
                 <div className="p-2">
                   <p>Check Out</p>
-                  <input type="date" className="w-full" />
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={'outline'}
+                        className={cn(
+                          'w-full justify-start text-left font-normal mt-1',
+                          !checkoutDate && 'text-muted-foreground'
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {checkoutDate ? (
+                          format(checkoutDate, 'PPP')
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar
+                        mode="single"
+                        selected={checkoutDate}
+                        onSelect={setCheckoutDate}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <div className="p-2 flex gap-2">
+                  <p>Total:</p>{' '}
+                  <span className="text-muted-foreground font-normal">
+                    $200 ($20 per night)
+                  </span>
                 </div>
               </div>
               <button className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white rounded-lg py-2 px-4 capitalize mt-2">

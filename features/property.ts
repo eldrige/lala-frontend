@@ -10,6 +10,12 @@ const createProperty = (
 const getMyProperties = (): Promise<Partial<TProperty[]>> =>
   axios.get('/properties/my-properties');
 
+const getProperty = (id: string): Promise<Partial<TProperty>> =>
+  axios.get(`/properties/${id}`);
+
+const getAllProperties = (): Promise<Partial<TProperty[]>> =>
+  axios.get('/properties');
+
 const editProperty = (data: Partial<TProperty>): Promise<Partial<TProperty>> =>
   axios.put(`/properties/${data.id}`, data);
 
@@ -31,6 +37,20 @@ export const useGetMyProperties = () => {
   return useQuery({
     queryKey: ['my-properties'],
     queryFn: getMyProperties,
+  });
+};
+
+export const useGetProperty = (id: string) => {
+  return useQuery({
+    queryKey: ['property', id],
+    queryFn: () => getProperty(id),
+  });
+};
+
+export const useGetAllProperties = () => {
+  return useQuery({
+    queryKey: ['all-properties'],
+    queryFn: getAllProperties,
   });
 };
 
