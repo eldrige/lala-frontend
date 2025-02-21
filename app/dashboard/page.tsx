@@ -12,7 +12,28 @@ import { useGetMyProperties } from '@/features/property';
 import { PropertyCard } from './components/property';
 import { TProperty } from '@/types/property';
 import { EditListing } from './components/edit-listing';
+import { Skeleton } from '@/components/ui/skeleton';
 // import { PropertyCard } from '@/components/property-card';
+
+const Loader = () => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-x-2 gap-y-4">
+      {Array.from({ length: 4 }).map((_, i) => (
+        <div key={i} className="w-full md:max-w-72 mb-4">
+          <div className="h-72 rounded-lg relative md:max-w-72 mb-3.5 overflow-hidden">
+            <Skeleton className="h-full w-full rounded-lg" />
+          </div>
+          <div className="w-full flex justify-between items-center">
+            <Skeleton className="h-5 w-2/3" />
+            <Skeleton className="h-5 w-10" />
+          </div>
+          <Skeleton className="h-4 w-full mt-1" />
+          <Skeleton className="h-4 w-20 mt-1" />
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const Page = () => {
   const { data, isPending } = useGetMyProperties();
@@ -23,6 +44,10 @@ const Page = () => {
   );
 
   const closeForm = () => setIsOpen(false);
+
+  if (isPending) {
+    return <Loader />;
+  }
 
   return (
     <div className="p-6 md:p-10 md:pt-8 max-md:pb-40">

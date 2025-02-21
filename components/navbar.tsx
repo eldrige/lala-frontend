@@ -10,7 +10,9 @@ import {
   MenuItems,
 } from '@headlessui/react';
 import { Bars3Icon, HeartIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { deleteCookie } from 'cookies-next';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
@@ -30,10 +32,17 @@ function extractInitials(name: string) {
 }
 
 export default function Navbar() {
+  const router = useRouter();
   const { data, isLoading } = useGetMe();
-
   const userInitials = extractInitials(data?.user?.name || '');
   if (isLoading) return null;
+
+  const logout = () => {
+    deleteCookie('LALA_TOKEN');
+    deleteCookie('LALA_USER');
+    router.push('/');
+    window.location.reload();
+  };
 
   return (
     <Disclosure
@@ -98,12 +107,12 @@ export default function Navbar() {
                     </MenuItem>
 
                     <MenuItem>
-                      <a
-                        href="#"
+                      <button
+                        onClick={logout}
                         className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                       >
                         Sign out
-                      </a>
+                      </button>
                     </MenuItem>
                   </MenuItems>
                 </Menu>

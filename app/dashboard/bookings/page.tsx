@@ -1,5 +1,6 @@
 // import { NoContent } from './components/no-listings';
 'use client';
+import TableLoader from '@/app/renter-dashboard/bookings/components/loader';
 import {
   Table,
   TableBody,
@@ -18,6 +19,10 @@ import clsx from 'clsx';
 const Page = () => {
   const { data, isPending } = useGetMyBookings();
   const { mutate, isPending: isUpdating } = useUpdateBookingStatus();
+  if (isPending) {
+    return <TableLoader />;
+  }
+
   return (
     <div className="p-6 md:p-10 md:pt-8 max-md:pb-40">
       <div className="w-full flex items-center justify-between py-4 border-b border-[#0000001A]">

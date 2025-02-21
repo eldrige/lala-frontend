@@ -7,14 +7,10 @@ import Navbar from '@/components/navbar';
 import { PropertyCard } from '@/components/property-card';
 import { HomeIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
-import Image from 'next/image';
-import clsx from 'clsx';
 import { useGetAllProperties } from '@/features/property';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Loader } from './components/loader';
 import { SmoothScrollWrapper } from '@/components/smooth-scroll-wrapper';
 import { PropertyList } from './components/property-list';
-import { unescape } from 'querystring';
 
 const CATEGORIES = [
   { label: 'All', active: true },
@@ -25,6 +21,9 @@ const CATEGORIES = [
 
 export default function Home() {
   const { data, isLoading } = useGetAllProperties();
+  const [showMore, setShowMore] = useState(false);
+  const firstPropertyList = data?.slice(0, 8);
+  const secondPropertyList = data?.slice(8);
 
   if (isLoading) {
     return <Loader />;
@@ -83,13 +82,17 @@ export default function Home() {
           </div>
           <h2 className="text-2xl text-black font-bold my-8">Popular around</h2>
           {data !== undefined && data.length > 0 ? (
-            <PropertyList properties={data} />
+            <PropertyList properties={firstPropertyList} />
           ) : null}
+          {showMore && <PropertyList properties={secondPropertyList} />}
           <div className="flex items-center justify-center mt-8 mb-4">
             <div className="text-black flex items-center justify-center gap-4 flex-col">
               <p className="font-semibold">Continue exploring design homes</p>
-              <button className="bg-black text-white rounded-lg py-2 px-4 capitalize">
-                show more
+              <button
+                onClick={() => setShowMore(!showMore)}
+                className="bg-black text-white rounded-lg py-2 px-4 capitalize"
+              >
+                show {showMore ? 'less' : 'more'}
               </button>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import { axios } from '@/lib/axios';
 import { TUser } from '@/types/auth';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { setCookie } from 'cookies-next';
+import { deleteCookie, setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 
 const loginViaGoogle = ({
@@ -21,6 +21,16 @@ const getMe = (): Promise<GetMeResponse> => axios.get('/users/me');
 
 export const useGetMe = () => useQuery({ queryKey: ['me'], queryFn: getMe });
 
+// export const useLogout = () => {
+//   const router = useRouter();
+
+//   deleteCookie('LALA_TOKEN');
+//   deleteCookie('LALA_USER');
+//   router.push('/');
+//   window.location.reload();
+
+// };
+
 export const useLoginViaGoogle = () => {
   const router = useRouter();
   return useMutation({
@@ -34,7 +44,7 @@ export const useLoginViaGoogle = () => {
         setCookie('LALA_TOKEN', data.token);
         setCookie('LALA_USER', JSON.stringify(data.data.user));
         if (userRole === 'RENTER') {
-          router.push('/renter-dashboard');
+          router.push('/renter-dashboard/bookings');
         } else {
           router.push('/dashboard');
         }

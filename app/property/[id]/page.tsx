@@ -12,7 +12,6 @@ import Image from 'next/image';
 import { useGetProperty } from '@/features/property';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
-
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -22,6 +21,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { useCreateBooking } from '@/features/bookings';
+import Loader from './components/loader';
 
 export default function Page() {
   const { id } = useParams();
@@ -41,6 +41,10 @@ export default function Page() {
   };
 
   const total = getTotal();
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   // Calculate difference in days
   // const propertyId = router.query.id;
