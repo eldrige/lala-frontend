@@ -10,5 +10,6 @@ export type TProperty = {
   isGuestFavorite: boolean;
   location: string;
   id: string;
+  image: string;
   host: TUser;
 };

@@ -40,7 +40,7 @@ export const PropertyCard = ({ property }: { property: TProperty }) => {
             Guest Favorite
           </div>
           <Image
-            src={`/images/house.jpg`}
+            src={property.image || `/images/house.jpg`}
             alt="pretty house"
             className="rounded-lg"
             fill

@@ -21,7 +21,7 @@ export const PropertyCard = ({
     <div className="w-full md:max-w-72 cursor-pointer mb-4">
       <div className="h-72 rounded-lg relative md:max-w-72 mb-3.5">
         <Image
-          src="/images/house.jpg"
+          src={property.image || '/images/house.jpg'}
           alt="pretty house"
           className="rounded-lg"
           fill
