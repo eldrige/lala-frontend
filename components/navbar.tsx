@@ -31,8 +31,10 @@ function extractInitials(name: string) {
 
 export default function Navbar() {
   const { data, isLoading } = useGetMe();
-  console.log(data, 'From profile');
+
   const userInitials = extractInitials(data?.user?.name || '');
+  if (isLoading) return null;
+
   return (
     <Disclosure
       as="nav"

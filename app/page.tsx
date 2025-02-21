@@ -10,6 +10,11 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import clsx from 'clsx';
 import { useGetAllProperties } from '@/features/property';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Loader } from './components/loader';
+import { SmoothScrollWrapper } from '@/components/smooth-scroll-wrapper';
+import { PropertyList } from './components/property-list';
+import { unescape } from 'querystring';
 
 const CATEGORIES = [
   { label: 'All', active: true },
@@ -20,9 +25,13 @@ const CATEGORIES = [
 
 export default function Home() {
   const { data, isLoading } = useGetAllProperties();
-  console.log(data, 'From home');
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
-    <>
+    <SmoothScrollWrapper>
       <Navbar />
       <div className="w-full bg-white z-50">
         <Container classNames="bg-gray-100 rounded-b-2xl px-10 sm:px-0 relative overflow-hidden">
@@ -68,15 +77,14 @@ export default function Home() {
             Your recent searches
           </h2>
           <div className="flex flex-col md:flex-row gap-8">
-            {/* <PropertyCard />
-            <PropertyCard /> */}
-          </div>
-          <h2 className="text-2xl text-black font-bold my-8">Popular around</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-x-2 gap-y-4">
-            {data?.map((property, i) => (
+            {data?.slice(0, 2).map((property, i) => (
               <PropertyCard key={i} property={property} />
             ))}
           </div>
+          <h2 className="text-2xl text-black font-bold my-8">Popular around</h2>
+          {data !== undefined && data.length > 0 ? (
+            <PropertyList properties={data} />
+          ) : null}
           <div className="flex items-center justify-center mt-8 mb-4">
             <div className="text-black flex items-center justify-center gap-4 flex-col">
               <p className="font-semibold">Continue exploring design homes</p>
@@ -88,6 +96,6 @@ export default function Home() {
         </Container>
         <Footer />
       </div>
-    </>
+    </SmoothScrollWrapper>
   );
 }

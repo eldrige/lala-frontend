@@ -1,6 +1,7 @@
 // import { useRouter } from 'next/router';
 'use client';
 import { useState } from 'react';
+import { differenceInDays } from 'date-fns';
 import { Container } from '@/components/container';
 import { Footer } from '@/components/footer';
 import Navbar from '@/components/navbar';
@@ -20,14 +21,29 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { useCreateBooking } from '@/features/bookings';
 
 export default function Page() {
-  const [date, setDate] = useState<Date>();
   const { id } = useParams();
+  const [date, setDate] = useState<Date>();
   const [checkoutDate, setCheckoutDate] = useState<Date>();
   const { data, isLoading } = useGetProperty(id);
+  const { mutate, isPending } = useCreateBooking();
+
+  const getTotal = () => {
+    if (date && checkoutDate && data?.pricePerNight) {
+      const checkIn = new Date(date);
+      const checkOut = new Date(checkoutDate);
+      const nights = differenceInDays(checkOut, checkIn);
+      return nights * data?.pricePerNight;
+    }
+    return 0;
+  };
+
+  const total = getTotal();
+
+  // Calculate difference in days
   // const propertyId = router.query.id;
-  console.log(data, 'From page');
   return (
     <>
       <Navbar />
@@ -146,7 +162,12 @@ export default function Page() {
             </div>
             <div className="w-full py-6 ">
               <div className="flex gap-2 items-center">
-                <span className="size-12 rounded-full bg-pink-500"></span>
+                {/* <span className="size-12 rounded-full bg-pink-500"></span> */}
+                <img
+                  alt=""
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  className="size-12 rounded-full"
+                />
                 <h3 className="text-gray-600 text-lg">
                   Hosted by {data?.host?.name}
                 </h3>
@@ -249,13 +270,23 @@ export default function Page() {
                 </div>
                 <div className="p-2 flex gap-2">
                   <p>Total:</p>{' '}
-                  <span className="text-muted-foreground font-normal">
-                    $200 ($20 per night)
+                  <span className="font-normal">
+                    ${total} (${data?.pricePerNight} per night)
                   </span>
                 </div>
               </div>
-              <button className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white rounded-lg py-2 px-4 capitalize mt-2">
-                Book
+              <button
+                disabled={!date || !checkoutDate || isPending}
+                onClick={() => {
+                  mutate({
+                    propertyId: data.id,
+                    checkIn: date,
+                    checkOut: checkoutDate,
+                  });
+                }}
+                className="bg-gradient-to-r disabled:cursor-not-allowed from-indigo-500 via-purple-500 to-pink-500 text-white rounded-lg py-2 px-4 capitalize mt-2"
+              >
+                {isPending ? 'Booking....' : 'Book now'}
               </button>
             </div>
           </div>

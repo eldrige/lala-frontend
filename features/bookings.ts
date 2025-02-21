@@ -12,6 +12,17 @@ const updateBookingStatus = ({
 }): Promise<Partial<TBooking>> =>
   axios.put(`/bookings/${id}/status`, { status });
 
+const createBooking = ({
+  propertyId,
+  checkIn,
+  checkOut,
+}: {
+  propertyId: string;
+  checkIn: string;
+  checkOut: string;
+}): Promise<Partial<TBooking>> =>
+  axios.post(`/bookings`, { propertyId, checkIn, checkOut });
+
 const getMyBookingsAsHost = (): Promise<Array<TBooking>> =>
   axios.get('/bookings/host-bookings');
 
@@ -45,6 +56,21 @@ export const useUpdateBookingStatus = () => {
         queryKey: ['my-bookings', 'renter-bookings'],
       });
       toast.success('Booking updated', {
+        position: 'bottom-right' as ExternalToast['position'],
+      });
+    },
+  });
+};
+
+export const useCreateBooking = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createBooking,
+    onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ['my-bookings', 'renter-bookings', 'my-properties'],
+      });
+      toast.success('Reservation made', {
         position: 'bottom-right' as ExternalToast['position'],
       });
     },
