@@ -35,6 +35,20 @@ const Loader = () => {
   );
 };
 
+const IMAGES = [
+  '/images/house.jpg',
+  '/images/house-one.jpg',
+  '/images/house-two.jpg',
+  '/images/house-three.jpg',
+  '/images/house-four.jpg',
+  '/images/house-five.jpg',
+  '/images/house-six.jpg',
+  '/images/house-seven.jpg',
+  '/images/house-eight.jpg',
+  '/images/house-nine.jpg',
+  '/images/house-ten.jpg',
+];
+
 const Page = () => {
   const { data, isPending } = useGetMyProperties();
   const [isOpen, setIsOpen] = useState(false);
@@ -73,6 +87,7 @@ const Page = () => {
               key={index}
               property={property}
               setIsEditOpen={setIsEditOpen}
+              image={IMAGES[index]}
             />
           </div>
         ))}
