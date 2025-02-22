@@ -12,15 +12,15 @@ import {
 } from '@heroicons/react/24/outline';
 
 const LINKS = [
-  {
-    label: 'Dashboard',
-    icon: <HomeIcon className="size-6" />,
-    path: '/dashboard',
-  },
+  // {
+  //   label: 'Dashboard',
+  //   icon: <HomeIcon className="size-6" />,
+  //   path: '/dashboard',
+  // },
   {
     label: 'Bookings',
     icon: <BookOpenIcon className="size-6" />,
-    path: '/bookings',
+    path: '/renter-dashboard/bookings',
   },
   {
     label: 'Favorites',
@@ -53,20 +53,11 @@ const NavLink: React.FC<any> = ({ label, children }) => {
       </div>
       <hr className="my-4" />
       {LINKS.map((navlink, index) => (
-        <Link
-          href={
-            navlink.path === 'dashboard'
-              ? '/dashboard'
-              : `dashboard${navlink.path}`
-          }
-          key={index}
-        >
+        <Link href={navlink.path} key={index}>
           <div
             className={clsx(
               'flex cursor-pointer py-3 rounded-lg px-2 pr-3 mb-1 items-center gap-2 hover:bg-pink-200 active:bg-pink-200 transition-all ease-in-out duration-200',
-              pathname === `dashboard${navlink.path}`
-                ? 'bg-pink-200'
-                : 'text-gray-800'
+              pathname === navlink.path ? 'bg-pink-200' : 'text-gray-800'
             )}
           >
             {navlink.icon}

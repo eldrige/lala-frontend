@@ -66,13 +66,16 @@ export const useCreateBooking = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createBooking,
-    onSuccess() {
+    onSuccess(data) {
+      console.log(data, 'From here');
       queryClient.invalidateQueries({
         queryKey: ['my-bookings', 'renter-bookings', 'my-properties'],
       });
-      toast.success('Reservation made', {
-        position: 'bottom-right' as ExternalToast['position'],
-      });
+      if (data) {
+        toast.success('Reservation made', {
+          position: 'bottom-right' as ExternalToast['position'],
+        });
+      }
     },
   });
 };

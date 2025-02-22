@@ -19,6 +19,12 @@ export const axios = Axios.create({
 axios.interceptors.request.use((config) => authRequestInterceptor(config));
 
 const interceptRespose = (error: AxiosError) => {
+  console.log(error, 'From intercept');
+  if (error.status === 401) {
+    toast.error('Please login to perform this action', {
+      position: 'bottom-right' as ExternalToast['position'],
+    });
+  }
   type ResponseError = Partial<{
     status: string;
     message: string;
