@@ -118,7 +118,7 @@ export default function Navbar() {
                 </Menu>
               </>
             ) : (
-              <>
+              <div className="hidden  md:flex gap-4">
                 <Link
                   href="/authentication/sign-up/"
                   className="bg-gradient-to-l from-indigo-500 via-purple-500 to-pink-500 text-white rounded-lg py-2 px-4 capitalize"
@@ -131,7 +131,7 @@ export default function Navbar() {
                 >
                   Sign in
                 </Link>
-              </>
+              </div>
             )}
           </div>
         </div>

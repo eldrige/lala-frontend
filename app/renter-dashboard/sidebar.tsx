@@ -2,14 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
-import {
-  BookOpenIcon,
-  HeartIcon,
-  HomeIcon,
-  StarIcon,
-} from '@heroicons/react/24/outline';
+import { BookOpenIcon, HeartIcon, StarIcon } from '@heroicons/react/24/outline';
 
 const LINKS = [
   // {
@@ -34,8 +28,7 @@ const LINKS = [
   },
 ];
 
-const NavLink: React.FC<any> = ({ label, children }) => {
-  const router = useRouter();
+const NavLink = () => {
   const pathname = usePathname();
 
   return (

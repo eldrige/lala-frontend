@@ -4,7 +4,13 @@ import { useForm } from 'react-hook-form';
 import clsx from 'clsx';
 import { useCreateProperty } from '@/features/property';
 
-export default function CreateListingForm({ closeForm }: any) {
+interface CreateListingFormProps {
+  closeForm: () => void;
+}
+
+export default function CreateListingForm({
+  closeForm,
+}: CreateListingFormProps) {
   const { mutate, isPending, isSuccess } = useCreateProperty();
   const {
     register,

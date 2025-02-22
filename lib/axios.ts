@@ -13,7 +13,8 @@ async function authRequestInterceptor(config: InternalAxiosRequestConfig) {
 }
 
 export const axios = Axios.create({
-  baseURL: 'http://localhost:2000/',
+  // baseURL: 'http://localhost:2000/',
+  baseURL: 'https://lala-technical-interview.onrender.com/',
 });
 
 axios.interceptors.request.use((config) => authRequestInterceptor(config));

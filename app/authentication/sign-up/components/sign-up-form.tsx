@@ -1,19 +1,13 @@
 'use client';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useMutation } from '@tanstack/react-query';
 import { useGoogleLogin } from '@react-oauth/google';
-
-import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
-import { Spinner } from '@/components/spinner';
-import { Button } from '@/components/button';
 import { useLoginViaGoogle } from '@/features/auth';
 
 export function SignUpStep() {
   const [role, setRole] = useState<'RENTER' | 'HOST'>('RENTER');
-  const { mutate, isPending: loginViaGoogleLoading } = useLoginViaGoogle();
+  const { mutate } = useLoginViaGoogle();
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => {
       mutate({

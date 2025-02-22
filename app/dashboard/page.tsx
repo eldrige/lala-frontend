@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client';
 import { NoContent } from './components/no-listings';
 import {

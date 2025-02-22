@@ -1,10 +1,8 @@
 import { TProperty } from '@/types/property';
-import { getRandomImage } from '@/utils';
 import { HeartIcon, StarIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'motion/react';
-// import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 
 const cardVariants = {
@@ -26,6 +24,7 @@ export const PropertyCard = ({
     offset: ['start end', 'end start'],
   });
   const parallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '-30%']);
+  console.log(parallaxY, 'parallaxY');
 
   // const image = getRandomImage();
   return (

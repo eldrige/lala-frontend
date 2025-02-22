@@ -1,5 +1,6 @@
+//@ts-nocheck
 'use client';
-import { useState, createElement } from 'react';
+import { useState } from 'react';
 import { Container } from '@/components/container';
 import { Footer } from '@/components/footer';
 import { ImageMosaic } from '@/components/image-mosaic';

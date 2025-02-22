@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { SignUpStep } from './sign-up/components/sign-up-form';
 import { SignInForm } from './components/sign-in-form';
 
 const Page = () => {
