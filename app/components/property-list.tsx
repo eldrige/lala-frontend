@@ -11,6 +11,20 @@ const containerVariants = {
   },
 };
 
+const IMAGES = [
+  '/images/house.jpg',
+  '/images/house-one.jpg',
+  '/images/house-two.jpg',
+  '/images/house-three.jpg',
+  '/images/house-four.jpg',
+  '/images/house-five.jpg',
+  '/images/house-six.jpg',
+  '/images/house-seven.jpg',
+  '/images/house-eight.jpg',
+  '/images/house-nine.jpg',
+  '/images/house-ten.jpg',
+];
+
 export const PropertyList = ({ properties }: { properties: TProperty[] }) => {
   return (
     <motion.div
@@ -19,8 +33,12 @@ export const PropertyList = ({ properties }: { properties: TProperty[] }) => {
       animate="visible"
       className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
     >
-      {properties.map((property) => (
-        <PropertyCard key={property.id} property={property} />
+      {properties.map((property, index) => (
+        <PropertyCard
+          key={property.id}
+          property={property}
+          image={IMAGES[index]}
+        />
       ))}
     </motion.div>
   );

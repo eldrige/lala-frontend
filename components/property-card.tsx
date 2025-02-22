@@ -12,7 +12,13 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
-export const PropertyCard = ({ property }: { property: TProperty }) => {
+export const PropertyCard = ({
+  property,
+  image,
+}: {
+  property: TProperty;
+  image?: string;
+}) => {
   console.log(property, 'From card');
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -40,7 +46,7 @@ export const PropertyCard = ({ property }: { property: TProperty }) => {
             Guest Favorite
           </div>
           <Image
-            src={property.image || `/images/house.jpg`}
+            src={image ?? `/images/house.jpg`}
             alt="pretty house"
             className="rounded-lg"
             fill
